@@ -34,16 +34,16 @@ export default function (props: ImageListProps) {
 
   return (
     <div>
-      {props.images.length === 0 && <p>No images found</p>}
-
-      {props.images.map((img) => (
-        <img
-          loading="lazy"
-          src={`/i/?src=${encodeURIComponent(img.src)}&base=${
-            encodeURIComponent(props.baseUrl)
-          }`}
-        />
-      ))}
+      <div>
+        {props.images.map((img) => (
+          <img
+            loading="lazy"
+            src={`/i/?src=${encodeURIComponent(img.src)}&base=${
+              encodeURIComponent(props.baseUrl)
+            }`}
+          />
+        ))}
+      </div>
 
       {props.images.length > 0 && (
         <button onClick={onDownload}>

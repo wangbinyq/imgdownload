@@ -1,19 +1,25 @@
 import { FreshContext } from "$fresh/server.ts";
+import { Logo } from "../components/Logo.tsx";
 import ImageList, { ImageListProps } from "../islands/ImageList.tsx";
-import { SearchImageForm } from "../partials/SearchImageForm.tsx";
+import PageToast from "../islands/PageToast.tsx";
+import { SearchImageForm } from "../islands/SearchImageForm.tsx";
 import { DOMParser, Element } from "@b-fuze/deno-dom";
 
 export default async function (req: Request, ctx: FreshContext) {
   const query = ctx.url.searchParams;
 
-  let error;
+  let error, warn;
   let url = "";
   let title = "";
   let images = [] as ImageListProps["images"];
   try {
-    url = new URL(query.get("url") as string).toString();
+    const u = query.get("url") as string;
+    if (!u) {
+      return Response.redirect(new URL("/", ctx.url));
+    }
+    url = new URL(u).toString();
   } catch (e) {
-    error = new Error("Invalid URL");
+    error = "Invalid URL";
   }
 
   if (url) {
@@ -32,15 +38,24 @@ export default async function (req: Request, ctx: FreshContext) {
         ),
       );
       title = dom.querySelector("title")?.textContent || "";
+
+      if (images.length === 0) {
+        warn = `No images found`;
+      }
     } catch (e) {
-      error = new Error("Can't find images from this url");
+      error = "Can't find images from this url";
     }
   }
 
   return (
     <>
-      {error && <p>{error.message}</p>}
-      <SearchImageForm defaultValue={url} />
+      <PageToast error={error} warn={warn} />
+      <header class="flex items-center py-2">
+        <a href="/" class="mr-auto pr-2">
+          <Logo />
+        </a>
+        <SearchImageForm defaultValue={url} />
+      </header>
       <ImageList images={images} baseUrl={url} title={title} />
     </>
   );

@@ -11,6 +11,9 @@ import * as $index from "./routes/index.tsx";
 import * as $s from "./routes/s.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $ImageList from "./islands/ImageList.tsx";
+import * as $PageToast from "./islands/PageToast.tsx";
+import * as $SearchImageForm from "./islands/SearchImageForm.tsx";
+import * as $ToastContainer from "./islands/ToastContainer.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -26,6 +29,9 @@ const manifest = {
   islands: {
     "./islands/Counter.tsx": $Counter,
     "./islands/ImageList.tsx": $ImageList,
+    "./islands/PageToast.tsx": $PageToast,
+    "./islands/SearchImageForm.tsx": $SearchImageForm,
+    "./islands/ToastContainer.tsx": $ToastContainer,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
