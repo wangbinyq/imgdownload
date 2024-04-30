@@ -24,6 +24,7 @@ export default function (props: ImageListProps) {
   const images = useSignal<Image[]>(props.images);
   const ref = useRef<HTMLAnchorElement>(null);
   const href = useSignal("");
+  const downloading = useSignal(false);
 
   useEffect(() => {
     images.value.forEach(async (img) => {
@@ -39,27 +40,36 @@ export default function (props: ImageListProps) {
       return;
     }
 
-    const blob = new BlobWriter("application/zip");
-    const zipWriter = new ZipWriter(blob);
-    await Promise.all(
-      Array.from(props.images).map(function (img, i) {
-        zipWriter.add(
-          img.name,
-          new HttpReader(new URL(img.url).toString()),
-        );
-      }),
-    );
-    const result = await zipWriter.close();
-    href.value = URL.createObjectURL(result);
-    ref.current?.click();
+    try {
+      downloading.value = true;
+      const blob = new BlobWriter("application/zip");
+      const zipWriter = new ZipWriter(blob);
+      await Promise.all(
+        Array.from(props.images).map(function (img, i) {
+          zipWriter.add(
+            i + 1 + "-" + img.name,
+            new HttpReader(img.url),
+          );
+        }),
+      );
+      const result = await zipWriter.close();
+      href.value = URL.createObjectURL(result);
+      ref.current?.click();
+    } finally {
+      downloading.value = false;
+    }
   };
 
   return (
     <div class="my-3 p-5 rounded bg-gray-100">
       <div className="flex mb-3">
         <span>Found {props.images.length} Images</span>
-        <button class="ml-auto text-gray-600" onClick={onDownload}>
-          Download
+        <button
+          disabled={downloading.value}
+          class="ml-auto text-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed"
+          onClick={onDownload}
+        >
+          {downloading.value ? "Downloading" : "Download"}
         </button>
       </div>
       <div class="rounded grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
