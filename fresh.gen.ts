@@ -4,34 +4,24 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
-import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_get_images from "./routes/api/get_images.ts";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $i from "./routes/i.tsx";
 import * as $index from "./routes/index.tsx";
-import * as $s from "./routes/s.tsx";
-import * as $Counter from "./islands/Counter.tsx";
-import * as $ImageList from "./islands/ImageList.tsx";
-import * as $PageToast from "./islands/PageToast.tsx";
 import * as $SearchImageForm from "./islands/SearchImageForm.tsx";
-import * as $ToastContainer from "./islands/ToastContainer.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
-    "./routes/api/joke.ts": $api_joke,
+    "./routes/api/get_images.ts": $api_get_images,
     "./routes/greet/[name].tsx": $greet_name_,
     "./routes/i.tsx": $i,
     "./routes/index.tsx": $index,
-    "./routes/s.tsx": $s,
   },
   islands: {
-    "./islands/Counter.tsx": $Counter,
-    "./islands/ImageList.tsx": $ImageList,
-    "./islands/PageToast.tsx": $PageToast,
     "./islands/SearchImageForm.tsx": $SearchImageForm,
-    "./islands/ToastContainer.tsx": $ToastContainer,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

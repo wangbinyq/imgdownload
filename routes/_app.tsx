@@ -1,5 +1,4 @@
 import { type PageProps } from "$fresh/server.ts";
-import ToastContainer from "../islands/ToastContainer.tsx";
 export default function App({ Component }: PageProps) {
   return (
     <html>
@@ -15,7 +14,6 @@ export default function App({ Component }: PageProps) {
       </head>
       <body class="container mx-auto px-2">
         <Component />
-        <ToastContainer autoClose={3000} />
       </body>
     </html>
   );
