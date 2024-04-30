@@ -32,6 +32,9 @@ export default async function (req: Request, ctx: FreshContext) {
           Array.from(dom.querySelectorAll("img")).flatMap((img) =>
             (img as unknown as Element).getAttribute("src") as string
           ).filter((src) => !src.startsWith("data")).map((src) => ({
+            url: `/i?src=${encodeURIComponent(src)}&base=${
+              encodeURIComponent(url)
+            }`,
             src,
             name: new URL(src, url).pathname.split("/").slice(-1)[0],
           })),
@@ -50,7 +53,7 @@ export default async function (req: Request, ctx: FreshContext) {
   return (
     <>
       <PageToast error={error} warn={warn} />
-      <header class="flex items-center py-2">
+      <header class="flex items-center pt-2">
         <a href="/" class="mr-auto pr-2">
           <Logo />
         </a>

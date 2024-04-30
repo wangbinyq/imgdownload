@@ -13,7 +13,7 @@ export default function App({ Component }: PageProps) {
           href="https://cdn.jsdelivr.net/npm/react-toastify@10.0.5/dist/ReactToastify.min.css"
         />
       </head>
-      <body class="container mx-auto">
+      <body class="container mx-auto px-2">
         <Component />
         <ToastContainer autoClose={3000} />
       </body>

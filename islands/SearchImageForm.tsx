@@ -23,7 +23,7 @@ export function SearchImageForm(
         onSubmit={onSubmit}
         action="/s"
         {...props}
-        class="flex-1 max-w-prose flex relative"
+        class="flex-1 min-w-0 max-w-prose flex relative"
       >
         <div className="absolute left-3 top-[10px] text-slate-300">
           <HiSearch size={20} />
@@ -31,7 +31,7 @@ export function SearchImageForm(
         <input
           ref={ref}
           placeholder="Enter any url, e.g. https://example.com"
-          class="flex-1 h-10 border border-gray-300 outline-none rounded-full pl-10 pr-4 hover:shadow-full focus:shadow-full"
+          class="min-w-0 flex-1 h-10 border border-gray-300 outline-none rounded-full pl-10 pr-4 hover:shadow-full focus:shadow-full"
           name="url"
           type="search"
           autocomplete="off"
